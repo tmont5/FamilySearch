@@ -5,6 +5,7 @@ import Model.Event;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class EventDao {
     private final Connection conn;
@@ -76,6 +77,33 @@ public class EventDao {
 
     }
 
+    public Event[] findAll(String associatedUsername) throws DataAccessException {
+        if(associatedUsername == null){
+            throw new DataAccessException("AssociatedUsername is null");
+        }
+        Event event = null;
+        Event [] events = null;
+        ArrayList<Event> eventList = new ArrayList<>();
+        ResultSet rs;
+        String sql = "SELECT * FROM Event WHERE associatedUsername = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, associatedUsername);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                event = new Event(rs.getString("EventID"), rs.getString("AssociatedUsername"),
+                        rs.getString("PersonID"), rs.getFloat("Latitude"), rs.getFloat("Longitude"),
+                        rs.getString("Country"), rs.getString("City"), rs.getString("EventType"),
+                        rs.getInt("Year"));
+                eventList.add(event);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while finding an event in the database");
+        }
+        events = eventList.toArray(new Event[eventList.size()]);
+        return events;
+    }
+
     /**
      * Clears all events from the database
      * @throws DataAccessException
@@ -106,49 +134,7 @@ public class EventDao {
         }
     }
 
-    /**
-     * Checks if an event exists in the database
-     * @param eventID
-     * @return
-     * @throws DataAccessException
-     */
-    public boolean eventExists(String eventID) throws DataAccessException {
-        if (eventID == null) {
-            throw new DataAccessException("EventID is null");
-        }
-        ResultSet rs;
-        String sql = "SELECT * FROM Event WHERE eventID = ?;";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, eventID);
-            rs = stmt.executeQuery();
-            if (rs.next()) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DataAccessException("Error encountered while finding an event in the database");
-        }
-    }
 
-    /**
-     * Deletes specific event from the database
-     * @param eventID
-     * @throws DataAccessException
-     */
-    public void deleteEvent(String eventID) throws DataAccessException {
-        if (eventID == null) {
-            throw new DataAccessException("EventID is null");
-        }
-        String sql = "DELETE FROM Event WHERE eventID = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, eventID);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DataAccessException("Error encountered while deleting an event from the database");
-        }
-    }
+
 }
 

@@ -25,9 +25,5 @@ public class PersonRequest {
     public void setPersonID(String personID) {
         this.personID = personID;
     }
-
-    public String person(String authToken, String personID){
-        return "personID";
-    }
 }
 

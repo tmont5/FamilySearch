@@ -413,7 +413,7 @@ public class ServerTest {
             //This is a valid api call, so the headers sent should be HTTP_OK (200)
             assertHTTP_OK();
             //Checks to make sure eventResult has information for an Event [OR] in the case that there isn't, that there is no error message String
-            assertTrue(eventResult.getMessage() == null || !eventResult.getMessage().toLowerCase().contains("error"), "Result contains an error message");
+            Assertions.assertTrue(eventResult.getMessage() == null || !eventResult.getMessage().toLowerCase().contains("error"), "Result contains an error message");
             //Checks to make sure eventResult has the same information for the "Sheila_Asteroids" Event as it is listed in loadRequest
             assertEquals(loadRequest.getEvent(ASTEROIDS1_EVENT_ID), eventResult.toEvent(), "Event returned does not match event from LoadRequest");
             //We are calling the get single event api with an eventID of "Other_Asteroids" (we are using the authtoken variable from the same loginResult)
@@ -421,13 +421,13 @@ public class ServerTest {
             //This is a valid api call, so the headers sent should be HTTP_OK (200)
             assertHTTP_OK();
             //Checks to make sure eventResult has information for an Event [OR] in the case that there isn't, that there is no error message String
-            assertTrue(eventResult.getMessage() == null || !eventResult.getMessage().toLowerCase().contains("error"), "Result contains an error message");
+            Assertions.assertTrue(eventResult.getMessage() == null || !eventResult.getMessage().toLowerCase().contains("error"), "Result contains an error message");
             //Checks to make sure eventResult has the same information for the "Other_Asteroids" Event as it is listed in loadRequest
             assertEquals(loadRequest.getEvent(ASTEROIDS2_EVENT_ID), eventResult.toEvent(), "Event returned does not match event from LoadRequest");
         } catch (ServerConnectionException e) {
             fail(e.getMessage());
         } catch (FileNotFoundException e) {
-            fail("passoffFiles/LoadData.json not found in project root directory");
+            Assertions.fail("passoffFiles/LoadData.json not found in project root directory");
         }
     }
 
@@ -726,13 +726,13 @@ public class ServerTest {
             //Splits the fillResult message into four crucial parts
             String[] message = result.getMessage().split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
             //Checks to be sure the fillResult message starts with the phrase "Successfully added "
-            assertEquals("Successfully added ", message[0], "First part of passoffresult message does not match API");
+            Assertions.assertEquals("Successfully added ", message[0], "First part of passoffresult message does not match API");
             //Checks to be sure the fillResult message confirms that 31 people were added into the database
-            assertTrue(minimumPeople <= Integer.parseInt(message[1]), "Not enough people added");
+            Assertions.assertTrue(minimumPeople <= Integer.parseInt(message[1]), "Not enough people added");
             //Checks to be sure the fillResult message has the phrase " persons and " in between listing the number of people and the number of events
-            assertEquals(" persons and ", message[2], "Second part of passoffresult message does not match API");
+            Assertions.assertEquals(" persons and ", message[2], "Second part of passoffresult message does not match API");
             //Checks to be sure the fillResult message confirms that 91 events were added into the database
-            assertTrue(minEvents <= Integer.parseInt(message[3]), "Not enough events added");
+            Assertions.assertTrue(minEvents <= Integer.parseInt(message[3]), "Not enough events added");
         } catch (ServerConnectionException e) {
             fail(e.getMessage());
         }
@@ -766,13 +766,13 @@ public class ServerTest {
             //Splits the fillResult message into four crucial parts
             String[] message = result.getMessage().split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
             //Checks to be sure the fillResult message starts with the phrase "Successfully added "
-            assertEquals("Successfully added ", message[0], "First part of passoffresult message does not match API");
+            Assertions.assertEquals("Successfully added ", message[0], "First part of passoffresult message does not match API");
             //Checks to be sure the fillResult message confirms that 7 people were added into the database
-            assertTrue(minimumPeople <= Integer.parseInt(message[1]), "Not enough people added");
+            Assertions.assertTrue(minimumPeople <= Integer.parseInt(message[1]), "Not enough people added");
             //Checks to be sure the fillResult message has the phrase " persons and " in between listing the number of people and the number of events
-            assertEquals(" persons and ", message[2], "Second part of passoffresult message does not match API");
+            Assertions.assertEquals(" persons and ", message[2], "Second part of passoffresult message does not match API");
             //Checks to be sure the fillResult message confirms that 19 events were added into the database
-            assertTrue(minEvents <= Integer.parseInt(message[3]), "Not enough events added");
+            Assertions.assertTrue(minEvents <= Integer.parseInt(message[3]), "Not enough events added");
         } catch (ServerConnectionException e) {
             fail(e.getMessage());
         }
@@ -806,13 +806,13 @@ public class ServerTest {
             //Splits the fillResult message into four crucial parts
             String[] message = result.getMessage().split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
             //Checks to be sure the fillResult message starts with the phrase "Successfully added "
-            assertEquals("Successfully added ", message[0], "First part of passoffresult message does not match API");
+            Assertions.assertEquals("Successfully added ", message[0], "First part of passoffresult message does not match API");
             //Checks to be sure the fillResult message confirms that 63 people were added into the database
-            assertTrue(minimumPeople <= Integer.parseInt(message[1]), "Not enough people added");
+            Assertions.assertTrue(minimumPeople <= Integer.parseInt(message[1]), "Not enough people added");
             //Checks to be sure the fillResult message has the phrase " persons and " in between listing the number of people and the number of events
-            assertEquals(" persons and ", message[2], "Second part of passoffresult message does not match API");
+            Assertions.assertEquals(" persons and ", message[2], "Second part of passoffresult message does not match API");
             //Checks to be sure the fillResult message confirms that 187 events were added into the database
-            assertTrue(minEvents <= Integer.parseInt(message[3]), "Not enough events added");
+            Assertions.assertTrue(minEvents <= Integer.parseInt(message[3]), "Not enough events added");
         } catch (ServerConnectionException e) {
             fail(e.getMessage());
         }
@@ -850,19 +850,19 @@ public class ServerTest {
             //Splits the loadResult message into six crucial parts
             String[] message = result.getMessage().split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
             //Checks to be sure the loadResult message starts with the phrase "Successfully added "
-            assertEquals("Successfully added ", message[0], "First part of passoffresult message does not match API");
+            Assertions.assertEquals("Successfully added ", message[0], "First part of passoffresult message does not match API");
             //Checks to be sure the loadResult message confirms that 2 users were added into the database
-            assertEquals(users, Integer.parseInt(message[1]), "Incorrect number of users added");
+            Assertions.assertEquals(users, Integer.parseInt(message[1]), "Incorrect number of users added");
             //Checks to be sure the loadResult message has the phrase " users, " in between listing the number of users and the number of persons
-            assertEquals(" users, ", message[2], "Second part of passoffresult message does not match API");
+            Assertions.assertEquals(" users, ", message[2], "Second part of passoffresult message does not match API");
             //Checks to be sure the loadResult message confirms that 11 people were added into the database
-            assertEquals(persons, Integer.parseInt(message[3]), "Incorrect number of persons added");
+            Assertions.assertEquals(persons, Integer.parseInt(message[3]), "Incorrect number of persons added");
             //Checks to be sure the loadResult message has the phrase " persons, and " in between listing the number of persons and the number of events
-            assertEquals(" persons, and ", message[4], "Third part of passoffresult message does not match API");
+            Assertions.assertEquals(" persons, and ", message[4], "Third part of passoffresult message does not match API");
             //Checks to be sure the loadResult message confirms that 19 events were added into the database
-            assertEquals(events, Integer.parseInt(message[5]), "Incorrect number of events added");
+            Assertions.assertEquals(events, Integer.parseInt(message[5]), "Incorrect number of events added");
         } catch (FileNotFoundException e) {
-            fail("passoffFiles/LoadData.json not found in project root directory");
+            Assertions.fail("passoffFiles/LoadData.json not found in project root directory");
         } catch (ServerConnectionException e) {
             fail(e.getMessage());
         }
@@ -907,7 +907,7 @@ public class ServerTest {
             //Checks to see if the list of people associated with patrick from loadRequest matches the list of people from personsResult
             assertEquals(loadRequest.getPersons(loginRequest2.getUsername()), personsResult.getDataAsSet(), PATRICK.getUsername() + "'s persons do not match those loaded");
         } catch (FileNotFoundException e) {
-            fail("passoffFiles/LoadData.json not found in project root directory");
+            Assertions.fail("passoffFiles/LoadData.json not found in project root directory");
         } catch (ServerConnectionException e) {
             fail(e.getMessage());
         }
@@ -961,7 +961,7 @@ public class ServerTest {
         } catch (ServerConnectionException e) {
             fail(e.getMessage());
         } catch (FileNotFoundException e) {
-            fail("passoffFiles/LoadData.json not found in project root directory");
+            Assertions.fail("passoffFiles/LoadData.json not found in project root directory");
         }
     }
 
@@ -1123,10 +1123,10 @@ public class ServerTest {
             return readString(indexHTMLIndex);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            fail("Failed to open " + filename + ". Place it in <project dir>/" + filename);
+            Assertions.fail("Failed to open " + filename + ". Place it in <project dir>/" + filename);
         } catch (IOException e) {
             e.printStackTrace();
-            fail("Failed to read " + filename + ". Be sure that you have read access to " + filename);
+            Assertions.fail("Failed to read " + filename + ". Be sure that you have read access to " + filename);
         }
         return null;
     }
@@ -1191,7 +1191,7 @@ public class ServerTest {
         } catch (ServerConnectionException e) {
             fail(e.getMessage());
         } catch (FileNotFoundException e) {
-            fail("passoffFiles/LoadData.json not found in project root directory");
+            Assertions.fail("passoffFiles/LoadData.json not found in project root directory");
         }
     }
 
@@ -1237,7 +1237,7 @@ public class ServerTest {
         Event fatherMarriage = eventsResult.getEvent(personFather.getPersonID(), MARRIAGE_EVENT);
         assertNotNull(fatherMarriage, relationship + "'s Father's marriage Event not included in passoffresult");
         int fatherMarriageYear = fatherMarriage.getYear();
-        assertTrue(fatherMarriageYear - fatherBirthYear >= MIN_REALISTIC_MARRIAGE_AGE, relationship + "'s father was married unrealistically young, min marriage age: " + MIN_REALISTIC_MARRIAGE_AGE);
+        Assertions.assertTrue(fatherMarriageYear - fatherBirthYear >= MIN_REALISTIC_MARRIAGE_AGE, relationship + "'s father was married unrealistically young, min marriage age: " + MIN_REALISTIC_MARRIAGE_AGE);
 
         Person personMother = personsResult.getPerson(person.getMotherID());
         assertNotNull(personMother, relationship + "'s Mother's Person not included in passoffresult");
@@ -1247,7 +1247,7 @@ public class ServerTest {
         Event motherMarriage = eventsResult.getEvent(personMother.getPersonID(), MARRIAGE_EVENT);
         assertNotNull(motherMarriage, relationship + "'s Mother's marriage Event not included in passoffresult");
         int motherMarriageYear = motherMarriage.getYear();
-        assertTrue(motherMarriageYear - motherBirthYear >= MIN_REALISTIC_MARRIAGE_AGE, relationship + "'s mother was married unrealistically young, min marriage age: " + MIN_REALISTIC_MARRIAGE_AGE);
+        Assertions.assertTrue(motherMarriageYear - motherBirthYear >= MIN_REALISTIC_MARRIAGE_AGE, relationship + "'s mother was married unrealistically young, min marriage age: " + MIN_REALISTIC_MARRIAGE_AGE);
 
         assertEquals(motherMarriage.getYear(), fatherMarriage.getYear(), relationship + "'s mother and father weren't married on the same day");
         assertEquals(motherMarriage.getCity(), fatherMarriage.getCity(), relationship + "'s mother and father weren't married in the same city");
@@ -1281,7 +1281,7 @@ public class ServerTest {
         assertNotNull(fatherBirth, relationship + "'s Father's birth Event not included in passoffresult");
         int fatherBirthYear = fatherBirth.getYear();
         int fatherAgeAtPersonBirth = personBirthYear - fatherBirthYear;
-        assertTrue(fatherAgeAtPersonBirth >= MIN_REALISTIC_PREGNANT_AGE, relationship + "'s father was unrealistically young at user's birth, min age of fatherhood: " + MIN_REALISTIC_PREGNANT_AGE);
+        Assertions.assertTrue(fatherAgeAtPersonBirth >= MIN_REALISTIC_PREGNANT_AGE, relationship + "'s father was unrealistically young at user's birth, min age of fatherhood: " + MIN_REALISTIC_PREGNANT_AGE);
 
         Person personMother = personsResult.getPerson(person.getMotherID());
         assertNotNull(personMother, relationship + "'s Mother's Person not included in passoffresult");
@@ -1289,8 +1289,8 @@ public class ServerTest {
         assertNotNull(motherBirth, relationship + "'s Mother's birth Event not included in passoffresult");
         int motherBirthYear = motherBirth.getYear();
         int motherAgeAtPersonBirth = personBirthYear - motherBirthYear;
-        assertTrue(motherAgeAtPersonBirth >= MIN_REALISTIC_PREGNANT_AGE, relationship + "'s mother was unrealistically young at user's birth, min pregnant age: " + MIN_REALISTIC_PREGNANT_AGE);
-        assertTrue(motherAgeAtPersonBirth <= MAX_REALISTIC_PREGNANT_AGE, relationship + "'s mother was unrealistically old at user's birth, max prenant age: " + MAX_REALISTIC_PREGNANT_AGE);
+        Assertions.assertTrue(motherAgeAtPersonBirth >= MIN_REALISTIC_PREGNANT_AGE, relationship + "'s mother was unrealistically young at user's birth, min pregnant age: " + MIN_REALISTIC_PREGNANT_AGE);
+        Assertions.assertTrue(motherAgeAtPersonBirth <= MAX_REALISTIC_PREGNANT_AGE, relationship + "'s mother was unrealistically old at user's birth, max prenant age: " + MAX_REALISTIC_PREGNANT_AGE);
 
         if (generationsLeft > 0) {
             checkPersonsBirth(eventsResult, personsResult, personFather, relationship + "'s father", generationsLeft - 1);
@@ -1317,7 +1317,7 @@ public class ServerTest {
         assertNotNull(death, relationship + "'s death Event not included in passoffresult");
         int deathYear = death.getYear();
         int ageAtDeath = deathYear - birthYear;
-        assertTrue(ageAtDeath <= MAX_REALISTIC_DEATH_AGE, relationship + " was unrealistically old at his/her death, max death age: " + MAX_REALISTIC_DEATH_AGE);
+        Assertions.assertTrue(ageAtDeath <= MAX_REALISTIC_DEATH_AGE, relationship + " was unrealistically old at his/her death, max death age: " + MAX_REALISTIC_DEATH_AGE);
 
         Person personMother = personsResult.getPerson(person.getMotherID());
         Person personFather = personsResult.getPerson(person.getFatherID());
@@ -1363,10 +1363,10 @@ public class ServerTest {
             checkPersonsParents(personsResult, personFather, relationship + "'s father", generationsLeft - 1);
             checkPersonsParents(personsResult, personMother, relationship + "'s mother", generationsLeft - 1);
         } else {
-            assertTrue(personFather.getFatherID() == null || personFather.getFatherID().equals(EMPTY_STRING), relationship + "'s father has a father. Too many generations");
-            assertTrue(personFather.getMotherID() == null || personFather.getMotherID().equals(EMPTY_STRING), relationship + "'s father has a mother. Too many generations");
-            assertTrue(personMother.getFatherID() == null || personMother.getFatherID().equals(EMPTY_STRING), relationship + "'s mother has a father. Too many generations");
-            assertTrue(personMother.getMotherID() == null || personMother.getMotherID().equals(EMPTY_STRING), relationship + "'s mother has a mother. Too many generations");
+            Assertions.assertTrue(personFather.getFatherID() == null || personFather.getFatherID().equals(EMPTY_STRING), relationship + "'s father has a father. Too many generations");
+            Assertions.assertTrue(personFather.getMotherID() == null || personFather.getMotherID().equals(EMPTY_STRING), relationship + "'s father has a mother. Too many generations");
+            Assertions.assertTrue(personMother.getFatherID() == null || personMother.getFatherID().equals(EMPTY_STRING), relationship + "'s mother has a father. Too many generations");
+            Assertions.assertTrue(personMother.getMotherID() == null || personMother.getMotherID().equals(EMPTY_STRING), relationship + "'s mother has a mother. Too many generations");
         }
     }
 

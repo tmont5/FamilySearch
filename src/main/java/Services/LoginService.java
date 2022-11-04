@@ -1,8 +1,10 @@
 package Services;
 
+import DataAccess.AuthTokenDao;
 import DataAccess.DataAccessException;
 import DataAccess.Database;
 import DataAccess.UserDao;
+import Model.AuthToken;
 import Result.LoginResult;
 import Request.LoginRequest;
 
@@ -20,25 +22,33 @@ public class LoginService {
     public LoginResult login(LoginRequest request) {
         LoginResult result = new LoginResult();
         Database db = new Database();
-        //UUID uuid =  UUID.randomUUID();
+        UUID uuid = UUID.randomUUID();
+        String authTokenString = uuid.toString();
+        AuthToken authToken = new AuthToken(authTokenString, request.getUserName());
 
         try{
             db.openConnection();
             UserDao userDao = new UserDao(db.getConnection());
+            AuthTokenDao authTokenDao = new AuthTokenDao(db.getConnection());
             if(userDao.find(request.getUserName()) != null){
                 if(userDao.find(request.getUserName()).getPassword().equals(request.getPassword())){
-                    result.setAuthToken(UUID.randomUUID().toString());
+                    authTokenDao.insert(authToken);
+                    result.setAuthToken(authTokenString);
                     result.setUsername(request.getUserName());
                     result.setPersonID(userDao.find(request.getUserName()).getPersonID());
                     result.setSuccess(true);
                     result.setMessage("Successfully logged in");
                 } else{
+                    db.closeConnection(false);
                     result.setSuccess(false);
-                    result.setMessage("Incorrect password");
+                    result.setMessage("Error: Incorrect password");
+                    return result;
                 }
             } else{
+                db.closeConnection(false);
                 result.setSuccess(false);
-                result.setMessage("User does not exist");
+                result.setMessage("Error: User does not exist");
+                return result;
             }
             db.closeConnection(true);
             return result;

@@ -2,15 +2,17 @@ package Result;
 
 public class RegisterResult {
 
-    private String authToken;
-    private String userName;
+    private String authtoken;
+    private String username;
     private String personID;
     private String message;
     boolean success;
 
-    public RegisterResult(String authToken, String userName, String personID, String message, boolean success) {
-        this.authToken = authToken;
-        this.userName = userName;
+    public RegisterResult() {}
+
+    public RegisterResult(String authtoken, String username, String personID, String message, boolean success) {
+        this.authtoken = authtoken;
+        this.username = username;
         this.personID = personID;
         this.message = message;
         this.success = success;
@@ -21,19 +23,19 @@ public class RegisterResult {
     }
 
     public String getAuthToken() {
-        return authToken;
+        return authtoken;
     }
 
-    public void setAuthToken(String authToken) {
-        this.authToken = authToken;
+    public void setAuthToken(String authtoken) {
+        this.authtoken = authtoken;
     }
 
     public String getUserName() {
-        return userName;
+        return username;
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.username = userName;
     }
 
     public String getPersonID() {

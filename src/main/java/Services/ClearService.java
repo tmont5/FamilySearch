@@ -28,13 +28,13 @@ public class ClearService {
             personDao.clear();
             authTokenDao.clear();
             db.closeConnection(true);
-            result.setMessage("Clear succeeded");
+            result.setMessage("Clear succeeded.");
             result.setSuccess(true);
             return result;
         } catch (DataAccessException e) {
             db.closeConnection(false);
             e.printStackTrace();
-            result.setMessage("Clear failed");
+            result.setMessage("Error: Clear failed");
             result.setSuccess(false);
             return result;
         }

@@ -21,24 +21,22 @@ public class ClearHandler implements HttpHandler {
     }
 
     private Gson gson = new Gson();
+    WriteString writeString = new WriteString();
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         boolean success = false;
         try {
             if (exchange.getRequestMethod().toLowerCase().equals("post")) {
-                InputStream reqBody = exchange.getRequestBody();
-                String reqData = readString(reqBody);
-                System.out.println(reqData);
 
-                ClearRequest request = (ClearRequest) gson.fromJson(reqData, ClearRequest.class);
+                ClearRequest request = new ClearRequest();
                 ClearService service = new ClearService();
                 ClearResult result = service.clear(request);
 
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 OutputStream respBody = exchange.getResponseBody();
                 String gsonString = gson.toJson(result);
-                writeString(gsonString, respBody);
+                writeString.writeString(gsonString, respBody);
                 respBody.close();
 
                 success = true;
@@ -53,23 +51,5 @@ public class ClearHandler implements HttpHandler {
             System.out.println("error");
             e.printStackTrace();
         }
-    }
-
-
-    private String readString(InputStream is) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        InputStreamReader sr = new InputStreamReader(is);
-        char[] buf = new char[1024];
-        int len;
-        while ((len = sr.read(buf)) > 0) {
-            sb.append(buf, 0, len);
-        }
-        return sb.toString();
-    }
-
-    private void writeString(String str, OutputStream os) throws IOException {
-        OutputStreamWriter sw = new OutputStreamWriter(os);
-        sw.write(str);
-        sw.flush();
     }
 }

@@ -34,10 +34,8 @@ public class FileHandler implements HttpHandler {
                 OutputStream respBody = exchange.getResponseBody();
                 Headers headers = exchange.getResponseHeaders();
                 headers.set("Content-Type", "text/html");
-                OutputStreamWriter writer = new OutputStreamWriter(respBody);
-                writer.write("<html><body><h1>Error 404: File Not Found</h1></body></html>");
-                writer.flush();
-                writer.close();
+                file = new File("web/HTML/404.html");
+                Files.copy(file.toPath(), respBody);
                 respBody.close();
             }
         }catch (IOException e) {

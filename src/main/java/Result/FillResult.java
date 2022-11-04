@@ -4,6 +4,8 @@ public class FillResult {
     private String message;
     private boolean success;
 
+    public FillResult(){}
+
     public FillResult(String message, boolean success) {
         this.message = message;
         this.success = success;

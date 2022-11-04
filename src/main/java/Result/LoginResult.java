@@ -3,7 +3,7 @@ package Result;
 
 
 public class LoginResult {
-    private String authToken;
+    private String authtoken;
     private String username;
     private String personID;
     private String message;
@@ -11,7 +11,7 @@ public class LoginResult {
 
     public LoginResult() {}
     public LoginResult( String authToken, String username, String personID, String message, boolean success) {
-        this.authToken = authToken;
+        this.authtoken = authToken;
         this.username = username;
         this.personID = personID;
         this.message = message;
@@ -27,11 +27,11 @@ public class LoginResult {
     }
 
     public String getAuthToken() {
-        return authToken;
+        return authtoken;
     }
 
     public void setAuthToken(String authToken) {
-        this.authToken = authToken;
+        this.authtoken = authToken;
     }
 
     public String getPersonID() {

@@ -16,6 +16,8 @@ public class LoadHandler implements HttpHandler {
 
 
     private Gson gson = new Gson();
+    ReadString readString = new ReadString();
+    WriteString writeString = new WriteString();
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -23,7 +25,7 @@ public class LoadHandler implements HttpHandler {
         try{
             if(exchange.getRequestMethod().toLowerCase().equals("post")){
                 InputStream reqBody = exchange.getRequestBody();
-                String reqData = readString(reqBody);
+                String reqData = readString.readString(reqBody);
                 System.out.println(reqData);
 
                 //Load data to database
@@ -34,11 +36,8 @@ public class LoadHandler implements HttpHandler {
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 OutputStream respBody = exchange.getResponseBody();
                 String gsonString = gson.toJson(result);
-                writeString(gsonString, respBody);
+                writeString.writeString(gsonString, respBody);
                 respBody.close();
-
-                //exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-                //exchange.getResponseBody().close();
 
                 success = true;
             }
@@ -54,22 +53,4 @@ public class LoadHandler implements HttpHandler {
             e.printStackTrace();
         }
     }
-
-    private String readString(InputStream is) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        InputStreamReader sr = new InputStreamReader(is);
-        char[] buf = new char[1024];
-        int len;
-        while ((len = sr.read(buf)) > 0) {
-            sb.append(buf, 0, len);
-        }
-        return sb.toString();
-    }
-
-    private void writeString(String str, OutputStream os) throws IOException {
-        OutputStreamWriter sw = new OutputStreamWriter(os);
-        sw.write(str);
-        sw.flush();
-    }
-
 }

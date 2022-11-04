@@ -1,9 +1,11 @@
 package Result;
 
-public class PersonResult {
+import Model.Person;
 
-    private String personID;
+public class PersonResult {
+    private Person[] data;
     private String associatedUsername;
+    private String personID;
     private String firstName;
     private String lastName;
     private String gender;
@@ -13,17 +15,47 @@ public class PersonResult {
     private String message;
     private boolean success;
 
-    public PersonResult(String personID, String associatedUsername, String firstName, String lastName, String gender, String fatherID, String motherID, String spouseID, String message, boolean success) {
-        this.personID = personID;
-        this.associatedUsername = associatedUsername;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.fatherID = fatherID;
-        this.motherID = motherID;
-        this.spouseID = spouseID;
+    public PersonResult(){}
+
+    public PersonResult(Person[] data, String message, boolean success) {
+        this.data = data;
         this.message = message;
         this.success = success;
+    }
+
+    public PersonResult(Person person, String message, boolean success){
+        this.associatedUsername = person.getAssociatedUsername();
+        this.personID = person.getPersonID();
+        this.firstName = person.getFirstName();
+        this.lastName = person.getLastName();
+        this.gender = person.getGender();
+        this.fatherID = person.getFatherID();
+        this.motherID = person.getMotherID();
+        this.spouseID = person.getSpouseID();
+        this.message = message;
+        this.success = success;
+    }
+
+
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public Person[] getData() {
+        return data;
     }
 
     public String getAssociatedUsername() {
@@ -58,20 +90,20 @@ public class PersonResult {
         this.lastName = lastName;
     }
 
-    public String getFatherID() {
-        return fatherID;
-    }
-
-    public void setFatherID(String fatherID) {
-        this.fatherID = fatherID;
-    }
-
     public String getGender() {
         return gender;
     }
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getFatherID() {
+        return fatherID;
+    }
+
+    public void setFatherID(String fatherID) {
+        this.fatherID = fatherID;
     }
 
     public String getMotherID() {
@@ -90,19 +122,9 @@ public class PersonResult {
         this.spouseID = spouseID;
     }
 
-    public String getMessage() {
-        return message;
+    public void setData(Person[] data) {
+        this.data = data;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
 }

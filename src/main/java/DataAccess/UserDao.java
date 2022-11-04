@@ -1,5 +1,6 @@
 package DataAccess;
 
+import Model.Person;
 import Model.User;
 
 import java.sql.Connection;
@@ -42,6 +43,7 @@ public class UserDao {
      * @return the user object
      * @throws DataAccessException if an error occurs while accessing the database
      */
+
     public User find(String username) throws DataAccessException {
         if(username == null){
             throw new DataAccessException("Username is null");

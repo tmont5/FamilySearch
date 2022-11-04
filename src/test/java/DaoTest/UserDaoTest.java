@@ -1,4 +1,4 @@
-package tests;
+package DaoTest;
 
 import DataAccess.DataAccessException;
 import DataAccess.Database;
@@ -87,6 +87,28 @@ class UserDaoTest {
             assertNull(compareTest);
         }catch (DataAccessException e){
             fail(e.getMessage());
+        }
+    }
+
+    @Test
+    void testFindUsernamePass() throws DataAccessException{
+        try {
+            uDao.insert(user);
+            User compareTest = uDao.find(user.getUserName());
+            assertNotNull(compareTest);
+            assertEquals(user.getUserName(), compareTest.getUserName());
+        }catch (DataAccessException e){
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    void testFindUsernameFail() throws DataAccessException{
+        try{
+            uDao.find(null);
+            fail("Should have thrown an exception");
+        }catch (DataAccessException e){
+            assertNotNull(e);
         }
     }
 

@@ -18,11 +18,12 @@ public class AuthTokenDao {
      * @throws DataAccessException if an error occurs while accessing the database
      */
     public void insert(AuthToken authToken) throws DataAccessException {
-        String sql = "INSERT INTO AuthTokens (authtoken, username) " +
+        clear();
+        String sql = "INSERT INTO AuthToken (authtoken, username) " +
                 "VALUES(?,?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, authToken.getAuthToken());
-            stmt.setString(2, authToken.getUserName());
+            stmt.setString(2, authToken.getUsername());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -37,6 +38,9 @@ public class AuthTokenDao {
      * @throws DataAccessException if an error occurs while accessing the database
      */
     public AuthToken find(String authtoken) throws DataAccessException {
+        if(authtoken == null){
+            throw new DataAccessException("AuthToken is null");
+        }
         AuthToken authToken;
         ResultSet rs = null;
         String sql = "SELECT * FROM AuthToken WHERE authtoken = ?;";
@@ -50,10 +54,13 @@ public class AuthTokenDao {
                 return null;
             }
         } catch (SQLException e) {
+
             e.printStackTrace();
             throw new DataAccessException("Error encountered while finding user");
         }
     }
+
+
 
     /**
      * Deletes all auth tokens from the database

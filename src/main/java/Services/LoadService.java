@@ -48,10 +48,15 @@ public class LoadService {
         LoadResult result =  new LoadResult();
         Database db = new Database();
         try {
+
             db.openConnection();
             UserDao userDao = new UserDao(db.getConnection());
             PersonDao personDao = new PersonDao(db.getConnection());
             EventDao eventDao = new EventDao(db.getConnection());
+
+            if(loadRequest.getPerson()[0] == null || loadRequest.getUser()[0] == null || loadRequest.getEvent()[0] == null){
+                throw new DataAccessException("Request property missing or has invalid value");
+            }
 
             clear();
 

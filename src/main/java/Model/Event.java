@@ -11,6 +11,8 @@ public class Event {
     private String eventType;
     private int year;
 
+    public Event(){}
+
     public Event(String eventID, String associatedUsername, String personID, float latitude, float longitude, String country, String city, String eventType, int year) {
         this.eventID = eventID;
         this.associatedUsername = associatedUsername;

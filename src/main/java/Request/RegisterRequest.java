@@ -4,29 +4,37 @@ import Model.User;
 
 public class RegisterRequest {
 
-    private String userName;
+    //private User user = new User();
+
+    private String username;
     private String password;
     private String email;
     private String firstName;
     private String lastName;
     private String gender;
+    private String personID;
 
 
-    public RegisterRequest(User user){
-        this.userName = user.getUserName();
-        this.password = user.getPassword();
-        this.email = user.getEmail();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.gender = user.getGender();
+
+
+    public RegisterRequest(){}
+
+    public RegisterRequest(String username, String password, String email, String firstName, String lastName, String gender, String personID) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.personID = personID;
     }
 
     public String getUserName() {
-        return userName;
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserName(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -42,7 +50,7 @@ public class RegisterRequest {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email =  email;
     }
 
     public String getFirstName() {
@@ -69,13 +77,13 @@ public class RegisterRequest {
         this.gender = gender;
     }
 
-    public String register(String userName, String password, String email, String firstName, String lastName, String gender){
-        return "personID";
+    public String getPersonID() {
+        return personID;
     }
 
-
-
-
+    public void setPersonID(String personID) {
+        this.personID = personID;
+    }
 
 
 
